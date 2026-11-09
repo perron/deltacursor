@@ -8,7 +8,7 @@ import json
 import sys
 from pathlib import Path
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def default_journal() -> Path:
@@ -32,9 +32,16 @@ def read_events(path: Path) -> list[dict]:
     if not path.exists():
         return []
     events = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if line.strip():
-            events.append(json.loads(line))
+    for i, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"invalid JSON on journal line {i}") from exc
+        if not isinstance(event, dict) or "seq" not in event:
+            raise ValueError(f"invalid event on journal line {i}")
+        events.append(event)
     return events
 
 

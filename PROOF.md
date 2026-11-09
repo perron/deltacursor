@@ -1,9 +1,13 @@
 # deltacursor proof
 
-Captured 2026-11-09 12:13 PST on the box.
+Captured 2026-11-09 13:27 PST.
+
+Fresh-venv install: `pip install .` succeeded and `deltacursor --version` printed `deltacursor 0.1.1`.
+
+Tests: 11 passed in 0.03s
 
 ```
-journal /tmp/ai-tools-demo/events.jsonl
+journal /tmp/ai-tools-proof/events.jsonl
 cursor eyJzZXEiOjB9
 seq 1
 cursor eyJzZXEiOjF9
